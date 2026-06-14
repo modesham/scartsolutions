@@ -3,15 +3,32 @@ import './App.css'
 type Card = {
   title: string
   description?: string
+  icon?: string
 }
 
-const navLinks = ['Home', 'Solutions', 'Scart One', 'About', 'Contact']
+const navLinks = ['Home', 'Solutions', 'Industries', 'Scart One', 'About', 'Contact']
 
-const trustItems = [
-  '15+ Years Experience',
-  'ERP Built In-House',
-  'Maldives-Based Support',
-  'Enterprise-Ready Solutions',
+const trustItems: Card[] = [
+  {
+    icon: '15',
+    title: '15+ Years Experience',
+    description: 'Established delivery across business-critical systems.',
+  },
+  {
+    icon: 'ER',
+    title: 'ERP Built In-House',
+    description: 'Product ownership from design to implementation.',
+  },
+  {
+    icon: 'MV',
+    title: 'Maldives-Based Support',
+    description: 'Local response for enterprise operations.',
+  },
+  {
+    icon: 'EN',
+    title: 'Enterprise-Ready Solutions',
+    description: 'Built for reliability, scale, and supportability.',
+  },
 ]
 
 const solutions: Card[] = [
@@ -39,6 +56,33 @@ const solutions: Card[] = [
 
 const scartOneFeatures = ['Inventory', 'POS', 'Purchasing', 'GST Reporting']
 
+const differentiators: Card[] = [
+  {
+    icon: 'BW',
+    title: 'Business Workflow Expertise',
+    description:
+      'We understand real retail, wholesale, and operational workflows.',
+  },
+  {
+    icon: 'SB',
+    title: 'Software Built In-House',
+    description:
+      'Scart One ERP is designed and built internally for real businesses.',
+  },
+  {
+    icon: 'IS',
+    title: 'Infrastructure + Software',
+    description:
+      'We provide both digital systems and physical infrastructure.',
+  },
+  {
+    icon: 'LP',
+    title: 'Long-Term Partnership',
+    description:
+      'We focus on reliability, support, and long-term value.',
+  },
+]
+
 const reasons = [
   'Deep business workflow understanding',
   'Real-world implementation experience',
@@ -60,8 +104,11 @@ function App() {
     <div className="site-shell">
       <header className="navbar">
         <a className="brand" href="#home" aria-label="Scart Solutions home">
-          <span className="brand-mark">S</span>
-          <span>SCART SOLUTIONS</span>
+          <span className="brand-mark" aria-hidden="true">S</span>
+          <span className="brand-text">
+            <span>SCART</span>
+            <span>SOLUTIONS</span>
+          </span>
         </a>
 
         <nav className="nav-links" aria-label="Primary navigation">
@@ -82,11 +129,14 @@ function App() {
           <div className="section-inner hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">Enterprise technology partner</p>
-              <h1>Technology That Powers Business</h1>
+              <h1>
+                Technology That
+                <span>Powers Business</span>
+              </h1>
               <p className="hero-subtitle">
-                We build reliable business technology - from ERP software and
-                POS systems to infrastructure, networking, and security
-                solutions.
+                Scart Solutions delivers enterprise-grade software,
+                infrastructure, and security systems built to power modern
+                businesses and institutions.
               </p>
               <div className="hero-actions" aria-label="Primary actions">
                 <a className="button button-primary" href="#solutions">
@@ -140,7 +190,15 @@ function App() {
         <section className="trust-strip" aria-label="Scart credibility">
           <div className="section-inner trust-grid">
             {trustItems.map((item) => (
-              <div key={item}>{item}</div>
+              <article className="trust-card" key={item.title}>
+                <span className="trust-icon" aria-hidden="true">
+                  {item.icon}
+                </span>
+                <div>
+                  <h2>{item.title}</h2>
+                  <p>{item.description}</p>
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -162,6 +220,31 @@ function App() {
                   <span className="card-icon" aria-hidden="true" />
                   <h3>{solution.title}</h3>
                   <p>{solution.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section difference-section" aria-labelledby="difference-title">
+          <div className="section-inner">
+            <div className="section-heading">
+              <p className="eyebrow">Enterprise advantage</p>
+              <h2 id="difference-title">Why Scart is Different</h2>
+              <p>
+                Most vendors install systems. We understand how businesses
+                operate.
+              </p>
+            </div>
+
+            <div className="card-grid four-column">
+              {differentiators.map((item) => (
+                <article className="premium-card difference-card" key={item.title}>
+                  <span className="card-icon text-icon" aria-hidden="true">
+                    {item.icon}
+                  </span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
                 </article>
               ))}
             </div>
@@ -212,7 +295,7 @@ function App() {
           </div>
         </section>
 
-        <section className="section muted-section" aria-labelledby="industries-title">
+        <section className="section muted-section" id="industries" aria-labelledby="industries-title">
           <div className="section-inner">
             <div className="section-heading">
               <p className="eyebrow">Industries served</p>
@@ -235,7 +318,7 @@ function App() {
               <p className="eyebrow">Start the conversation</p>
               <h2>Let's Build Something Reliable</h2>
             </div>
-            <a className="button button-primary" href="mailto:info@scartsolutions.com">
+            <a className="button button-primary" href="mailto:sales@scartsolutions.com">
               Contact Scart Solutions
             </a>
           </div>
@@ -247,26 +330,32 @@ function App() {
           <div>
             <a className="brand footer-brand" href="#home">
               <span className="brand-mark">S</span>
-              <span>SCART SOLUTIONS</span>
+              <span className="brand-text">
+                <span>SCART</span>
+                <span>SOLUTIONS</span>
+              </span>
             </a>
-            <p>Scart Solutions Pvt Ltd</p>
+            <p>Scart Solutions Private Limited</p>
           </div>
 
           <div>
             <h2>Quick Links</h2>
+            <a href="#home">Home</a>
             <a href="#solutions">Solutions</a>
+            <a href="#industries">Industries</a>
             <a href="#scart-one">Scart One</a>
             <a href="#about">About</a>
           </div>
 
           <div>
             <h2>Contact</h2>
-            <a href="mailto:info@scartsolutions.com">info@scartsolutions.com</a>
-            <p>Maldives-based enterprise support</p>
+            <a href="mailto:sales@scartsolutions.com">sales@scartsolutions.com</a>
+            <a href="tel:+9607967680">+960 7967680</a>
+            <p>V. Faskani, Sheikh Abdurahmaanu Magu, Vilimale, Maldives</p>
           </div>
         </div>
         <div className="section-inner copyright">
-          Copyright (c) 2026 Scart Solutions Pvt Ltd. All rights reserved.
+          Copyright (c) 2026 Scart Solutions Private Limited. All rights reserved.
         </div>
       </footer>
     </div>
