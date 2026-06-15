@@ -382,29 +382,31 @@ function App() {
   return (
     <div className="site-shell">
       <header className="navbar">
-        <a className="brand" href="#home" aria-label="Scart Solutions home">
-          <img
-            className="brand-logo"
-            src={scartLogo}
-            alt="Scart Solutions"
-            width="2048"
-            height="1152"
-          />
-        </a>
+        <div className="navbar-inner">
+          <a className="brand" href="#home" aria-label="Scart Solutions home">
+            <img
+              className="brand-logo"
+              src={scartLogo}
+              alt="Scart Solutions"
+              width="2048"
+              height="1152"
+            />
+          </a>
 
-        <nav className="nav-links" aria-label="Primary navigation">
-          {navLinks.map((link) => (
-            <a
-              className={link.id === activeSection ? 'active' : undefined}
-              key={link.href}
-              href={link.href}
-              onClick={(event) => handleNavClick(event, link.id)}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-        <span className="navbar-balance" aria-hidden="true" />
+          <nav className="nav-links" aria-label="Primary navigation">
+            {navLinks.map((link) => (
+              <a
+                className={link.id === activeSection ? 'active' : undefined}
+                key={link.href}
+                href={link.href}
+                onClick={(event) => handleNavClick(event, link.id)}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <span className="navbar-balance" aria-hidden="true" />
+        </div>
       </header>
 
       <main>
