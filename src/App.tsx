@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import type { MouseEvent } from 'react'
 import {
+  ArrowRight,
   Building2,
   Hotel,
+  Menu,
   Package,
   ShoppingCart,
   Wrench,
+  X,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import scartLogo from './assets/Scart-Logo.svg'
@@ -329,6 +332,7 @@ function BadgeIcon({ icon }: { icon: BadgeIconName }) {
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
     const updateActiveSection = () => {
@@ -367,11 +371,25 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [isMenuOpen])
+
   const handleNavClick = (
     event: MouseEvent<HTMLAnchorElement>,
     sectionId: string,
   ) => {
     event.preventDefault()
+    setIsMenuOpen(false)
     setActiveSection(sectionId)
     document.getElementById(sectionId)?.scrollIntoView({
       behavior: 'smooth',
@@ -399,24 +417,74 @@ function App() {
                 className={link.id === activeSection ? 'active' : undefined}
                 key={link.href}
                 href={link.href}
+              onClick={(event) => handleNavClick(event, link.id)}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setIsMenuOpen(true)}
+          >
+            <Menu size={24} strokeWidth={2} />
+          </button>
+        </div>
+      </header>
+
+      <div
+        className={`mobile-drawer-shell${isMenuOpen ? ' open' : ''}`}
+        aria-hidden={!isMenuOpen}
+      >
+        <button
+          className="drawer-backdrop"
+          type="button"
+          aria-label="Close navigation menu"
+          onClick={() => setIsMenuOpen(false)}
+        />
+        <aside className="mobile-drawer" id="mobile-navigation" aria-label="Mobile navigation">
+          <div className="drawer-header">
+            <span>Menu</span>
+            <button
+              className="drawer-close"
+              type="button"
+              aria-label="Close navigation menu"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <X size={22} strokeWidth={2} />
+            </button>
+          </div>
+
+          <nav className="drawer-links" aria-label="Mobile navigation links">
+            {navLinks.map((link) => (
+              <a
+                className={link.id === activeSection ? 'active' : undefined}
+                key={link.href}
+                href={link.href}
                 onClick={(event) => handleNavClick(event, link.id)}
               >
                 {link.label}
               </a>
             ))}
           </nav>
-          <span className="navbar-balance" aria-hidden="true" />
-        </div>
-      </header>
+        </aside>
+      </div>
 
       <main>
         <section className="hero-section" id="home">
           <div className="section-inner hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">Enterprise technology partner</p>
-              <h1>
+              <h1 className="hero-title">
                 Technology That
-                <span>Powers Business</span>
+                <span>
+                  Powers <strong>Business</strong>
+                </span>
               </h1>
               <p className="hero-subtitle">
                 Scart Solutions delivers enterprise-grade software,
@@ -424,14 +492,14 @@ function App() {
                 businesses and institutions.
               </p>
               <div className="hero-actions" aria-label="Primary actions">
-                <a className="button button-primary" href="#solutions">
+                <a className="button btn button-primary" href="#solutions">
                   Explore Solutions
                 </a>
               </div>
             </div>
 
             <div className="hero-visual" aria-label="Scart business technology dashboard">
-              <div className="visual-panel visual-panel-main">
+              <div className="visual-panel visual-panel-main dashboard-mockup hero-dashboard">
                 <div className="panel-header">
                   <span />
                   <span />
@@ -440,30 +508,63 @@ function App() {
                 <div className="metric-row">
                   <div>
                     <span className="metric-label">Operations</span>
-                    <strong>98.7%</strong>
+                    <span className="metric-value">
+                      <strong>98.7%</strong>
+                      <span className="sparkline" aria-hidden="true">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </span>
+                    </span>
                   </div>
                   <div>
                     <span className="metric-label">Sites</span>
-                    <strong>24</strong>
+                    <span className="metric-value">
+                      <strong>24</strong>
+                      <span className="sparkline violet" aria-hidden="true">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </span>
+                    </span>
                   </div>
                 </div>
-                <div className="chart-bars" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                  <span />
-                  <span />
+                <div className="chart-wrap" aria-hidden="true">
+                  <div className="chart-axis">
+                    <span>100%</span>
+                    <span>75%</span>
+                    <span>50%</span>
+                    <span>25%</span>
+                    <span>0%</span>
+                  </div>
+                  <div className="chart-bars">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
                 </div>
                 <div className="status-line">
-                  <span>Inventory sync</span>
+                  <span><i aria-hidden="true" />Inventory sync</span>
                   <strong>Live</strong>
                 </div>
               </div>
 
-              <div className="visual-panel visual-panel-small">
-                <span className="metric-label">Scart One</span>
-                <strong>ERP Core</strong>
-                <p>Inventory, POS, purchasing, GST</p>
+              <div className="visual-panel visual-panel-small erp-floating-card hero-erp-card">
+                <span className="erp-badge" aria-hidden="true">
+                  <ModuleIcon icon="inventory" />
+                </span>
+                <div>
+                  <span className="metric-label">Scart One</span>
+                  <strong>ERP Core</strong>
+                  <p>Inventory, POS, purchasing, GST</p>
+                </div>
+                <ArrowRight className="erp-arrow" size={26} strokeWidth={2.1} aria-hidden="true" />
               </div>
             </div>
           </div>
