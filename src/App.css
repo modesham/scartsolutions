@@ -274,9 +274,9 @@ section[id] {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(420px, 1fr) minmax(420px, 620px);
+  grid-template-columns: minmax(500px, 1fr) minmax(400px, 600px);
   align-items: center;
-  gap: 48px;
+  gap: 36px;
   min-height: 584px;
   padding: 40px 0 30px;
 }
@@ -309,7 +309,7 @@ section[id] {
   max-width: 720px;
   margin: 0;
   color: #ffffff;
-  font-size: clamp(3.4rem, 5.6vw, 5.65rem);
+  font-size: clamp(3.2rem, 4.65vw, 5rem);
   line-height: 0.95;
   letter-spacing: 0;
   text-shadow: 0 3px 18px rgba(0, 0, 0, 0.32);
@@ -402,13 +402,52 @@ section[id] {
 }
 
 .hero-visual {
+  --mockup-scale: 1;
+
   position: relative;
-  width: 100%;
-  max-width: 620px;
-  aspect-ratio: 620 / 460;
+  width: calc(620px * var(--mockup-scale));
+  height: calc(460px * var(--mockup-scale));
   margin-top: 0;
   justify-self: end;
   overflow: visible;
+}
+
+.hero-mockup-artboard {
+  position: relative;
+  width: 620px;
+  height: 460px;
+  transform: scale(var(--mockup-scale));
+  transform-origin: top left;
+}
+
+@media (min-width: 1100px) and (max-width: 1399px) {
+  .hero-visual {
+    --mockup-scale: 0.88;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1099px) {
+  .hero-visual {
+    --mockup-scale: 0.78;
+  }
+}
+
+@media (max-width: 899px) {
+  .hero-visual {
+    --mockup-scale: 0.68;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-visual {
+    --mockup-scale: 0.52;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-visual {
+    --mockup-scale: 0.44;
+  }
 }
 
 .visual-panel {
@@ -432,7 +471,11 @@ section[id] {
 }
 
 .hero-dashboard {
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 620px;
+  max-width: none;
   height: auto;
 }
 
@@ -631,9 +674,21 @@ section[id] {
 
 .hero-erp-card {
   position: absolute;
-  top: 42%;
-  left: -10%;
-  width: 42%;
+  top: 193px;
+  left: -62px;
+  width: 260px;
+  gap: 12px;
+  padding: 18px;
+  box-shadow:
+    0 0 32px rgba(18, 100, 255, 0.18),
+    0 22px 60px rgba(0, 0, 0, 0.28);
+}
+
+@media (min-width: 1100px) {
+  .hero-erp-card {
+    top: 171px;
+    left: -46px;
+  }
 }
 
 .erp-badge {
@@ -660,7 +715,7 @@ section[id] {
 .visual-panel-small strong {
   display: block;
   color: #ffffff;
-  font-size: 1.58rem;
+  font-size: 1.4rem;
 }
 
 .visual-panel-small p {
@@ -1102,6 +1157,28 @@ section[id] {
   text-shadow: 0 0 14px rgba(59, 130, 246, 0.18);
 }
 
+.footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.footer-contact-item:first-of-type {
+  margin-top: 10px;
+}
+
+.footer-contact-item a,
+.footer-contact-item p {
+  margin: 0;
+}
+
+.footer-contact-item svg {
+  flex-shrink: 0;
+  margin-top: 5px;
+  color: #2563eb;
+}
+
 .footer-brand {
   margin-bottom: 0;
   color: #0b1f3a;
@@ -1382,42 +1459,4 @@ section[id] {
     width: 100%;
   }
 
-  .hero-visual {
-    max-width: 100%;
-    aspect-ratio: auto;
-  }
-
-  .hero-erp-card {
-    top: 50%;
-    left: 6%;
-    width: 48%;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-erp-card {
-    top: 52%;
-    left: 7%;
-    width: 54%;
-    padding: 16px;
-    gap: 12px;
-  }
-
-  .erp-badge {
-    width: 42px;
-    height: 42px;
-  }
-
-  .erp-badge svg {
-    width: 22px;
-    height: 22px;
-  }
-
-  .visual-panel-small strong {
-    font-size: 1.2rem;
-  }
-
-  .visual-panel-small p {
-    font-size: 0.78rem;
-  }
 }

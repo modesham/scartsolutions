@@ -4,8 +4,11 @@ import {
   ArrowRight,
   Building2,
   Hotel,
+  Mail,
+  MapPin,
   Menu,
   Package,
+  Phone,
   ShoppingCart,
   Wrench,
   X,
@@ -499,7 +502,8 @@ function App() {
             </div>
 
             <div className="hero-visual" aria-label="Scart business technology dashboard">
-              <div className="visual-panel visual-panel-main dashboard-mockup hero-dashboard">
+              <div className="hero-mockup-artboard">
+                <div className="visual-panel visual-panel-main dashboard-mockup hero-dashboard">
                 <div className="panel-header">
                   <span />
                   <span />
@@ -553,18 +557,19 @@ function App() {
                   <span><i aria-hidden="true" />Inventory sync</span>
                   <strong>Live</strong>
                 </div>
-              </div>
-
-              <div className="visual-panel visual-panel-small erp-floating-card hero-erp-card">
-                <span className="erp-badge" aria-hidden="true">
-                  <ModuleIcon icon="inventory" />
-                </span>
-                <div>
-                  <span className="metric-label">Scart One</span>
-                  <strong>ERP Core</strong>
-                  <p>Inventory, POS, purchasing, GST</p>
                 </div>
-                <ArrowRight className="erp-arrow" size={26} strokeWidth={2.1} aria-hidden="true" />
+
+                <div className="visual-panel visual-panel-small erp-floating-card hero-erp-card">
+                  <span className="erp-badge" aria-hidden="true">
+                    <ModuleIcon icon="inventory" />
+                  </span>
+                  <div>
+                    <span className="metric-label">Scart One</span>
+                    <strong>ERP Core</strong>
+                    <p>Inventory, POS, purchasing, GST</p>
+                  </div>
+                  <ArrowRight className="erp-arrow" size={26} strokeWidth={2.1} aria-hidden="true" />
+                </div>
               </div>
             </div>
           </div>
@@ -709,7 +714,7 @@ function App() {
               <h2>Powering Businesses with Technology That Works</h2>
               <p>Software, infrastructure, and support designed for real operations.</p>
             </div>
-            <a className="button button-primary" href="mailto:sales@scartsolutions.com">
+            <a className="button button-primary" href="mailto:info@scartsolutions.com">
               Get in Touch
             </a>
           </div>
@@ -737,13 +742,29 @@ function App() {
             <a href="#industries">Industries</a>
             <a href="#scart-one">Scart One</a>
             <a href="#about">About</a>
+            <a href="#contact">Contact</a>
           </div>
 
           <div>
             <h2>Contact</h2>
-            <a href="mailto:sales@scartsolutions.com">sales@scartsolutions.com</a>
-            <a href="tel:+9607967680">+960 7967680</a>
-            <p>V. Faskani, Sheikh Abdurahmaanu Magu, Vilimale, Maldives</p>
+            <div className="footer-contact-item">
+              <Mail size={16} aria-hidden="true" />
+              <a href="mailto:info@scartsolutions.com">info@scartsolutions.com</a>
+            </div>
+            <div className="footer-contact-item">
+              <Phone size={16} aria-hidden="true" />
+              <a href="tel:+9607967680">+960 7967680</a>
+            </div>
+            <div className="footer-contact-item">
+              <MapPin size={16} aria-hidden="true" />
+              <p>
+                V. Faskani
+                <br />
+                Sheikh Abdurahmaanu Magu
+                <br />
+                Vilimale, Maldives
+              </p>
+            </div>
           </div>
         </div>
         <div className="section-inner copyright">
