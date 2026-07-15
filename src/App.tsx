@@ -195,9 +195,9 @@ const featuredProjects: FeaturedProject[] = [
   },
   {
     title: 'Scart Solutions',
-    category: 'Corporate Brand',
+    category: 'IN-HOUSE BRAND IDENTITY',
     description:
-      'A technology-focused corporate identity designed for consistent use across digital and printed business materials.',
+      'Corporate identity and stationery developed for Scart Solutions’ own professional technology brand.',
     imageSrc: scartMockup,
     imageAlt:
       'Scart Solutions corporate brand mockup with logo, stationery, business card, and branded mug.',
