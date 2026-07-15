@@ -14,6 +14,9 @@ import {
   X,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import admiralMockup from './assets/admiral-mockup.png'
+import goidhooMockup from './assets/goidhoo-mockup.png'
+import scartMockup from './assets/scart-mockup.png'
 import scartLogo from './assets/Scart-Logo.svg'
 import './App.css'
 
@@ -54,10 +57,19 @@ type IndustryCard = {
   Icon: LucideIcon
 }
 
+type FeaturedProject = {
+  title: string
+  category: string
+  description: string
+  imageSrc: string
+  imageAlt: string
+}
+
 const navLinks = [
   { label: 'Home', href: '#home', id: 'home' },
   { label: 'Solutions', href: '#solutions', id: 'solutions' },
   { label: 'Industries', href: '#industries', id: 'industries' },
+  { label: 'Work', href: '#work', id: 'work' },
   { label: 'Scart One', href: '#scart-one', id: 'scart-one' },
   { label: 'About', href: '#about', id: 'about' },
   { label: 'Contact', href: '#contact', id: 'contact' },
@@ -162,7 +174,45 @@ const industries: IndustryCard[] = [
   { title: 'Corporate', Icon: Building2 },
 ]
 
-const sectionIds = ['home', 'solutions', 'industries', 'scart-one', 'about', 'contact']
+const featuredProjects: FeaturedProject[] = [
+  {
+    title: 'Admiral Holdings',
+    category: 'Corporate Identity',
+    description:
+      'A complete corporate identity system including logo, business card, letterhead, corporate seal, and company profile design.',
+    imageSrc: admiralMockup,
+    imageAlt:
+      'Admiral Holdings corporate identity mockup with logo, business card, letterhead, and stationery.',
+  },
+  {
+    title: 'Goidhoo Excursions and Tours',
+    category: 'Tourism Branding',
+    description:
+      'Tourism-focused branding, promotional design, and apparel developed for excursion and marine activities.',
+    imageSrc: goidhooMockup,
+    imageAlt:
+      'Goidhoo Excursions and Tours tourism branding mockup with apparel and promotional poster design.',
+  },
+  {
+    title: 'Scart Solutions',
+    category: 'Corporate Brand',
+    description:
+      'A technology-focused corporate identity designed for consistent use across digital and printed business materials.',
+    imageSrc: scartMockup,
+    imageAlt:
+      'Scart Solutions corporate brand mockup with logo, stationery, business card, and branded mug.',
+  },
+]
+
+const sectionIds = [
+  'home',
+  'solutions',
+  'industries',
+  'work',
+  'scart-one',
+  'about',
+  'contact',
+]
 
 function ModuleIcon({ icon }: { icon: ModuleIconName }) {
   if (icon === 'inventory') {
@@ -636,6 +686,40 @@ function App() {
           </div>
         </section>
 
+        <section className="section selected-work-section" id="work" aria-labelledby="work-title">
+          <div className="section-inner">
+            <div className="section-heading">
+              <p className="eyebrow">SELECTED WORK</p>
+              <h2 id="work-title">Solutions designed for real businesses</h2>
+              <p>
+                A selection of branding, digital, and business-focused projects
+                developed to help organisations present themselves clearly and
+                operate professionally.
+              </p>
+            </div>
+
+            <div className="work-grid">
+              {featuredProjects.map((project) => (
+                <article className="work-card" key={project.title} tabIndex={0}>
+                  <div className="work-visual">
+                    <img src={project.imageSrc} alt={project.imageAlt} />
+                  </div>
+
+                  <div className="work-card-body">
+                    <p className="work-category">{project.category}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <span className="work-action">
+                      View Project
+                      <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="scart-one-section" id="scart-one">
           <div className="section-inner scart-one-grid">
             <div>
@@ -740,6 +824,7 @@ function App() {
             <a href="#home">Home</a>
             <a href="#solutions">Solutions</a>
             <a href="#industries">Industries</a>
+            <a href="#work">Work</a>
             <a href="#scart-one">Scart One</a>
             <a href="#about">About</a>
             <a href="#contact">Contact</a>
