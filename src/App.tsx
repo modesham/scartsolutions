@@ -709,10 +709,6 @@ function App() {
                     <p className="work-category">{project.category}</p>
                     <h3>{project.title}</h3>
                     <p>{project.description}</p>
-                    <span className="work-action">
-                      View Project
-                      <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
-                    </span>
                   </div>
                 </article>
               ))}

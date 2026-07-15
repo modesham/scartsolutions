@@ -1167,27 +1167,9 @@ section[id] {
 }
 
 .work-card-body > p:not(.work-category) {
-  margin: 14px 0 24px;
+  margin: 14px 0 0;
   color: #64748b;
   line-height: 1.62;
-}
-
-.work-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  color: #1e63ff;
-  font-weight: 900;
-}
-
-.work-action svg {
-  transition: transform 180ms ease;
-}
-
-.work-card:hover .work-action svg,
-.work-card:focus-visible .work-action svg {
-  transform: translateX(3px);
 }
 
 .contact-cta {
