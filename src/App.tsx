@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
 import {
   ArrowRight,
@@ -15,10 +15,24 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import admiralMockup from './assets/admiral-mockup.png'
+import admiralPage01 from './assets/portfolio/admiral-holdings/page-01.webp'
+import admiralPage02 from './assets/portfolio/admiral-holdings/page-02.webp'
+import admiralPage03 from './assets/portfolio/admiral-holdings/page-03.webp'
+import admiralPage04 from './assets/portfolio/admiral-holdings/page-04.webp'
+import goidhooPage01 from './assets/portfolio/goidhoo-excursions/page-01.webp'
+import goidhooPage02 from './assets/portfolio/goidhoo-excursions/page-02.webp'
+import goidhooPage03 from './assets/portfolio/goidhoo-excursions/page-03.webp'
+import goidhooPage04 from './assets/portfolio/goidhoo-excursions/page-04.webp'
 import goidhooMockup from './assets/goidhoo-mockup.png'
+import scartPage01 from './assets/portfolio/scart-solutions/page-01.webp'
+import scartPage02 from './assets/portfolio/scart-solutions/page-02.webp'
+import scartPage03 from './assets/portfolio/scart-solutions/page-03.webp'
+import scartPage04 from './assets/portfolio/scart-solutions/page-04.webp'
 import scartMockup from './assets/scart-mockup.png'
 import scartLogo from './assets/Scart-Logo.svg'
 import './App.css'
+
+const PortfolioProjectModal = lazy(() => import('./PortfolioProjectModal'))
 
 type Card = {
   title: string
@@ -63,6 +77,7 @@ type FeaturedProject = {
   description: string
   imageSrc: string
   imageAlt: string
+  pages: string[]
 }
 
 const navLinks = [
@@ -183,6 +198,7 @@ const featuredProjects: FeaturedProject[] = [
     imageSrc: admiralMockup,
     imageAlt:
       'Admiral Holdings corporate identity mockup with logo, business card, letterhead, and stationery.',
+    pages: [admiralPage01, admiralPage02, admiralPage03, admiralPage04],
   },
   {
     title: 'Goidhoo Excursions and Tours',
@@ -192,6 +208,7 @@ const featuredProjects: FeaturedProject[] = [
     imageSrc: goidhooMockup,
     imageAlt:
       'Goidhoo Excursions and Tours tourism branding mockup with apparel and promotional poster design.',
+    pages: [goidhooPage01, goidhooPage02, goidhooPage03, goidhooPage04],
   },
   {
     title: 'Scart Solutions',
@@ -201,6 +218,7 @@ const featuredProjects: FeaturedProject[] = [
     imageSrc: scartMockup,
     imageAlt:
       'Scart Solutions corporate brand mockup with logo, stationery, business card, and branded mug.',
+    pages: [scartPage01, scartPage02, scartPage03, scartPage04],
   },
 ]
 
@@ -386,6 +404,8 @@ function BadgeIcon({ icon }: { icon: BadgeIconName }) {
 function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<FeaturedProject | null>(null)
+  const projectTriggerRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
     const updateActiveSection = () => {
@@ -448,6 +468,22 @@ function App() {
       behavior: 'smooth',
       block: 'start',
     })
+  }
+
+  const handleProjectOpen = (
+    event: MouseEvent<HTMLButtonElement>,
+    project: FeaturedProject,
+  ) => {
+    projectTriggerRef.current = event.currentTarget
+    setSelectedProject(project)
+  }
+
+  const handleProjectClose = () => {
+    setSelectedProject(null)
+    window.setTimeout(() => {
+      projectTriggerRef.current?.focus()
+      projectTriggerRef.current = null
+    }, 0)
   }
 
   return (
@@ -700,7 +736,7 @@ function App() {
 
             <div className="work-grid">
               {featuredProjects.map((project) => (
-                <article className="work-card" key={project.title} tabIndex={0}>
+                <article className="work-card" key={project.title}>
                   <div className="work-visual">
                     <img src={project.imageSrc} alt={project.imageAlt} />
                   </div>
@@ -709,6 +745,15 @@ function App() {
                     <p className="work-category">{project.category}</p>
                     <h3>{project.title}</h3>
                     <p>{project.description}</p>
+                    <button
+                      className="work-action"
+                      type="button"
+                      onClick={(event) => handleProjectOpen(event, project)}
+                      aria-label={`View ${project.title} project`}
+                    >
+                      View Project
+                      <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+                    </button>
                   </div>
                 </article>
               ))}
@@ -852,6 +897,17 @@ function App() {
           Copyright (c) 2026 Scart Solutions Private Limited. All rights reserved.
         </div>
       </footer>
+
+      {selectedProject && (
+        <Suspense fallback={null}>
+          <PortfolioProjectModal
+            isOpen={Boolean(selectedProject)}
+            pages={selectedProject.pages}
+            projectTitle={selectedProject.title}
+            onClose={handleProjectClose}
+          />
+        </Suspense>
+      )}
     </div>
   )
 }
