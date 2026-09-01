@@ -12,6 +12,25 @@
       content="Scart Solutions Pvt Ltd builds reliable business technology, ERP software, POS systems, infrastructure, networking, and security solutions."
     />
     <title>Scart Solutions | Enterprise Business Technology</title>
+    <script>
+      (() => {
+        const storageKey = 'scart-solutions-theme'
+        let theme
+
+        try {
+          theme = window.localStorage.getItem(storageKey)
+        } catch {
+          theme = null
+        }
+
+        if (theme !== 'dark' && theme !== 'light') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+
+        document.documentElement.dataset.theme = theme
+        document.documentElement.style.colorScheme = theme
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

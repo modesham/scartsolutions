@@ -2,18 +2,21 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import type { MouseEvent } from 'react'
 import {
   ArrowRight,
-  BadgeCheck,
   ChartNoAxesCombined,
+  ChartColumnIncreasing,
   Building2,
+  Database,
   Files,
-  FolderOpen,
   Hotel,
   Mail,
   MapPin,
   Menu,
+  Moon,
   Package,
   Phone,
   ShoppingCart,
+  ShieldCheck,
+  Sun,
   Wrench,
   X,
 } from 'lucide-react'
@@ -33,7 +36,10 @@ import scartPage02 from './assets/portfolio/scart-solutions/page-02.webp'
 import scartPage03 from './assets/portfolio/scart-solutions/page-03.webp'
 import scartPage04 from './assets/portfolio/scart-solutions/page-04.webp'
 import scartMockup from './assets/scart-mockup.png'
-import scartLogo from './assets/Scart-Logo.svg'
+import scartLogoDark from './assets/Logo_Dark.png'
+import scartLogoWhite from './assets/Logo_White.png'
+import scartHubDark from './assets/Scart-Slogo-White.png'
+import scartHubLight from './assets/Scart-Slogo-dark.png'
 import './App.css'
 
 const PortfolioProjectModal = lazy(() => import('./PortfolioProjectModal'))
@@ -64,11 +70,9 @@ type ScartOneFeature = {
   icon: ModuleIconName
 }
 
-type ProductCapability = {
-  title: string
-  description: string
-  Icon: LucideIcon
-}
+type SiteTheme = 'dark' | 'light'
+
+const themeStorageKey = 'scart-solutions-theme'
 
 type SolutionIconName = 'software' | 'infrastructure' | 'security' | 'digital'
 
@@ -168,33 +172,6 @@ const scartFilesCapabilities = [
   'Secure Cloud Storage',
 ]
 
-const scartFilesFeatures: ProductCapability[] = [
-  {
-    title: 'Structured Filing',
-    description:
-      'Organize business records using meaningful document information instead of relying only on folders and filenames.',
-    Icon: FolderOpen,
-  },
-  {
-    title: 'Verification',
-    description:
-      'Move submitted documents through a controlled review process from pending verification to verified or correction required.',
-    Icon: BadgeCheck,
-  },
-  {
-    title: 'Multi-Company',
-    description:
-      'Manage records belonging to multiple companies and branches within one operational workspace.',
-    Icon: Building2,
-  },
-  {
-    title: 'Reports & Audit',
-    description:
-      'Use document registers, operational reports, and activity history to understand and trace business records.',
-    Icon: ChartNoAxesCombined,
-  },
-]
-
 const differentiators: IconCard[] = [
   {
     icon: 'workflow',
@@ -279,6 +256,26 @@ const sectionIds = [
   'about',
   'contact',
 ]
+
+function getStoredTheme(): SiteTheme | null {
+  try {
+    const storedTheme = window.localStorage.getItem(themeStorageKey)
+    return storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : null
+  } catch {
+    return null
+  }
+}
+
+function getInitialSiteTheme(): SiteTheme {
+  const documentTheme = document.documentElement.dataset.theme
+
+  if (documentTheme === 'dark' || documentTheme === 'light') {
+    return documentTheme
+  }
+
+  return getStoredTheme() ??
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+}
 
 function ModuleIcon({ icon }: { icon: ModuleIconName }) {
   if (icon === 'inventory') {
@@ -462,8 +459,46 @@ function CapabilityTags({ items }: { items: string[] }) {
 function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [siteTheme, setSiteTheme] = useState<SiteTheme>(getInitialSiteTheme)
   const [selectedProject, setSelectedProject] = useState<FeaturedProject | null>(null)
   const projectTriggerRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const followSystemTheme = (event: MediaQueryListEvent) => {
+      if (!getStoredTheme()) {
+        setSiteTheme(event.matches ? 'dark' : 'light')
+      }
+    }
+
+    colorSchemeQuery.addEventListener('change', followSystemTheme)
+
+    return () => {
+      colorSchemeQuery.removeEventListener('change', followSystemTheme)
+    }
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = siteTheme
+    document.documentElement.style.colorScheme = siteTheme
+  }, [siteTheme])
+
+  const scartLogo = siteTheme === 'dark' ? scartLogoWhite : scartLogoDark
+  const scartHubLogo = siteTheme === 'dark' ? scartHubDark : scartHubLight
+
+  const handleThemeToggle = () => {
+    setSiteTheme((currentTheme) => {
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark'
+
+      try {
+        window.localStorage.setItem(themeStorageKey, nextTheme)
+      } catch {
+        // Theme switching still works when storage is unavailable.
+      }
+
+      return nextTheme
+    })
+  }
 
   useEffect(() => {
     const targetId = window.location.hash.slice(1)
@@ -604,7 +639,21 @@ function App() {
               {link.label}
             </a>
           ))}
-        </nav>
+          </nav>
+
+          <button
+            className="theme-toggle"
+            type="button"
+            aria-label={`Switch to ${siteTheme === 'dark' ? 'light' : 'dark'} mode`}
+            title={`Switch to ${siteTheme === 'dark' ? 'light' : 'dark'} mode`}
+            onClick={handleThemeToggle}
+          >
+            {siteTheme === 'dark' ? (
+              <Sun size={19} strokeWidth={2} aria-hidden="true" />
+            ) : (
+              <Moon size={19} strokeWidth={2} aria-hidden="true" />
+            )}
+          </button>
 
           <button
             className="menu-toggle"
@@ -663,40 +712,41 @@ function App() {
             <div className="hero-copy">
               <p className="eyebrow">Enterprise technology partner</p>
               <h1 className="hero-title">
-                Technology That
-                <span>
-                  Powers <strong>Business</strong>
-                </span>
+                <span>Technology</span>
+                <span>That</span>
+                <span>Powers</span>
+                <strong>Business</strong>
               </h1>
               <p className="hero-subtitle">
-                Scart Solutions delivers enterprise-grade software,
-                infrastructure, and security systems built to power modern
-                businesses and institutions.
+                Scart Solutions builds business software and delivers the
+                infrastructure and security that keep modern organizations
+                moving.
               </p>
               <div className="hero-actions" aria-label="Primary actions">
                 <a className="button btn button-primary" href="#solutions">
                   Explore Solutions
+                  <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+                </a>
+                <a className="button hero-secondary-cta" href="#products">
+                  View Products
+                  <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
                 </a>
               </div>
             </div>
 
-            <div className="hero-visual" aria-label="Scart Solutions software product portfolio">
+            <div className="hero-visual" aria-label="Scart Solutions connected product ecosystem">
               <div className="hero-mockup-artboard">
-                <div className="visual-panel visual-panel-main dashboard-mockup hero-dashboard">
-                  <div className="panel-header">
-                    <span className="panel-dots" aria-hidden="true">
-                      <i />
-                      <i />
-                      <i />
-                    </span>
-                    <span className="hero-panel-heading">
-                      <span>Scart Solutions</span>
-                      <strong>Products</strong>
-                    </span>
+                <div className="hero-product-system">
+                  <div className="hero-system-header">
+                    <strong>Scart Solutions Products</strong>
+                    <div>
+                      <span><i aria-hidden="true" />Designed and built in-house</span>
+                      <b>2 Platforms</b>
+                    </div>
                   </div>
 
-                  <div className="hero-product-stack">
-                    <div className="hero-product-row hero-product-row-primary">
+                  <div className="hero-product-modules">
+                    <article className="hero-product-module hero-product-module-one">
                       <span className="hero-product-icon" aria-hidden="true">
                         <ModuleIcon icon="inventory" />
                       </span>
@@ -705,9 +755,9 @@ function App() {
                         <strong>ERP Platform</strong>
                         <p>Inventory · POS · Purchasing · GST</p>
                       </div>
-                    </div>
+                    </article>
 
-                    <div className="hero-product-row">
+                    <article className="hero-product-module hero-product-module-files">
                       <span className="hero-product-icon hero-product-icon-files" aria-hidden="true">
                         <Files />
                       </span>
@@ -716,40 +766,90 @@ function App() {
                         <strong>Multi-Entity Document Platform</strong>
                         <p>Structured Filing · Verification · Reports · Audit</p>
                       </div>
-                    </div>
+                    </article>
                   </div>
 
-                  <div className="status-line hero-product-status">
-                    <span><i aria-hidden="true" />Designed and built in-house</span>
-                    <strong>2 Platforms</strong>
+                  <div className="hero-ecosystem-map">
+                    <svg className="hero-ecosystem-connections" viewBox="0 0 820 390" aria-hidden="true">
+                      <path d="M206 66h112c40 0 34 72 76 96" />
+                      <path d="M198 193h108c36 0 46 4 86 13" />
+                      <path d="M294 354c44-48 54-96 101-116" />
+                      <path d="M616 66h-104c-40 0-38 70-78 96" />
+                      <path d="M636 193H530c-42 0-52 5-94 13" />
+                      <path d="M586 350c-46-44-54-92-150-112" />
+                      <circle cx="318" cy="66" r="4" />
+                      <circle cx="306" cy="193" r="4" />
+                      <circle cx="294" cy="354" r="4" />
+                      <circle cx="512" cy="66" r="4" />
+                      <circle cx="530" cy="193" r="4" />
+                      <circle cx="586" cy="350" r="4" />
+                    </svg>
+
+                    <div className="hero-capability-node hero-capability-operations">
+                      <span aria-hidden="true"><Package /></span>
+                      <div><strong>Operations</strong><small>Streamline day-to-day business operations</small></div>
+                    </div>
+                    <div className="hero-capability-node hero-capability-documents">
+                      <span aria-hidden="true"><Files /></span>
+                      <div><strong>Documents</strong><small>Organize, verify and manage documents</small></div>
+                    </div>
+                    <div className="hero-capability-node hero-capability-infrastructure">
+                      <span aria-hidden="true"><Database /></span>
+                      <div><strong>Infrastructure</strong><small>Reliable, secure and scalable infrastructure</small></div>
+                    </div>
+                    <div className="hero-capability-node hero-capability-analytics">
+                      <span aria-hidden="true"><ChartColumnIncreasing /></span>
+                      <div><strong>Analytics</strong><small>Actionable insights for better decisions</small></div>
+                    </div>
+                    <div className="hero-capability-node hero-capability-security">
+                      <span aria-hidden="true"><ShieldCheck /></span>
+                      <div><strong>Security</strong><small>Protect what matters with robust security</small></div>
+                    </div>
+                    <div className="hero-capability-node hero-capability-reporting">
+                      <span aria-hidden="true"><ChartNoAxesCombined /></span>
+                      <div><strong>Reporting</strong><small>Real-time reports that drive efficiency</small></div>
+                    </div>
+
+                    <div className="hero-ecosystem-hub" aria-hidden="true">
+                      <span className="hero-hub-bloom" />
+                      <span className="hero-hub-platform" />
+                      <span className="hero-hub-ring hero-hub-ring-outer" />
+                      <span className="hero-hub-ring hero-hub-ring-middle" />
+                      <span className="hero-hub-ring hero-hub-ring-inner" />
+                      <span className="hero-hub-frame">
+                        <img src={scartHubLogo} alt="" />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
 
-        <section className="trust-strip" aria-label="Scart credibility">
-          <div className="section-inner trust-grid">
-            {trustItems.map((item) => (
-              <article className="trust-card" key={item.title}>
-                <span className="trust-icon" aria-hidden="true">
-                  <BadgeIcon icon={item.icon} />
-                </span>
-                <div>
-                  <h2>{item.title}</h2>
-                  <p>{item.description}</p>
-                </div>
-              </article>
-            ))}
+          <div className="trust-strip hero-trust-strip" aria-label="Scart credibility">
+            <div className="section-inner trust-grid">
+              {trustItems.map((item) => (
+                <article className="trust-card" key={item.title}>
+                  <span className="trust-icon" aria-hidden="true">
+                    <BadgeIcon icon={item.icon} />
+                  </span>
+                  <div>
+                    <h2>{item.title}</h2>
+                    <p>{item.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
         <section className="section" id="solutions">
           <div className="section-inner">
-            <div className="section-heading">
-              <p className="eyebrow">Solutions</p>
-              <h2>Reliable technology across your business stack</h2>
+            <div className="section-heading solutions-heading">
+              <div>
+                <p className="eyebrow">Solutions</p>
+                <h2>Reliable technology across your business stack</h2>
+              </div>
               <p>
                 Scart Solutions delivers software, infrastructure, and security
                 capabilities with one implementation-minded team.
@@ -771,10 +871,14 @@ function App() {
         </section>
 
         <section className="section muted-section" id="industries" aria-labelledby="industries-title">
-          <div className="section-inner">
-            <div className="section-heading">
+          <div className="section-inner industries-layout">
+            <div className="section-heading industry-heading">
               <p className="eyebrow">Industries served</p>
               <h2 id="industries-title">Technology for teams that run every day</h2>
+              <p>
+                Practical systems shaped around operating environments where
+                reliability and responsive support matter.
+              </p>
             </div>
 
             <div className="industry-grid">
@@ -792,9 +896,11 @@ function App() {
 
         <section className="section selected-work-section" id="work" aria-labelledby="work-title">
           <div className="section-inner">
-            <div className="section-heading">
-              <p className="eyebrow">SELECTED WORK</p>
-              <h2 id="work-title">Solutions designed for real businesses</h2>
+            <div className="section-heading work-heading">
+              <div>
+                <p className="eyebrow">Selected work</p>
+                <h2 id="work-title">Solutions designed for real businesses</h2>
+              </div>
               <p>
                 A selection of branding, digital, and business-focused projects
                 developed to help organisations present themselves clearly and
@@ -831,7 +937,7 @@ function App() {
 
         <section className="section products-section" id="products" aria-labelledby="products-title">
           <div className="section-inner">
-            <div className="section-heading">
+            <div className="section-heading products-heading">
               <p className="eyebrow">Scart Solutions products</p>
               <h2 id="products-title">Built for real business operations</h2>
               <p>
@@ -840,7 +946,7 @@ function App() {
               </p>
             </div>
 
-            <div className="product-overview-grid">
+            <div className="product-overview-grid product-family-system">
               <article className="product-overview-card product-overview-card-primary">
                 <div className="product-card-header">
                   <span className="product-card-icon" aria-hidden="true">
@@ -867,7 +973,7 @@ function App() {
                   </span>
                 </div>
                 <p className="product-brand">Scart Files</p>
-                <h3>Multi-Entity Business Document Management Platform</h3>
+                <h3>Multi-Entity Document Platform</h3>
                 <p className="product-description">
                   A structured digital filing platform for businesses that need
                   to organize, verify, search, report on, and securely manage
@@ -884,53 +990,162 @@ function App() {
         </section>
 
         <section className="scart-one-section" id="scart-one">
-          <div className="section-inner scart-one-grid">
-            <div>
-              <p className="eyebrow">Business operations platform</p>
-              <h2>Meet Scart One</h2>
-              <p>
-                A modern ERP platform built for retail, wholesale,
-                distribution, and growing businesses.
-              </p>
+          <div className="section-inner product-showcase-layout">
+            <div className="product-showcase-copy">
+              <p className="eyebrow">Scart One</p>
+              <h2>Retail-First ERP Platform</h2>
+              <p>Run everyday business operations from one connected platform.</p>
+
+              <div className="product-showcase-capabilities" aria-label="Scart One capabilities">
+                {scartOneFeatures.map((feature) => (
+                  <span key={feature.title}>
+                    <i aria-hidden="true"><ModuleIcon icon={feature.icon} /></i>
+                    {feature.title}
+                  </span>
+                ))}
+              </div>
+
+              <a className="button button-primary product-showcase-cta" href="#contact">
+                Explore Scart One
+                <ArrowRight size={17} strokeWidth={2.2} aria-hidden="true" />
+              </a>
             </div>
 
-            <div className="feature-grid">
-              {scartOneFeatures.map((feature) => (
-                <article className="feature-card" key={feature.title}>
-                  <span className="feature-icon" aria-hidden="true">
-                    <ModuleIcon icon={feature.icon} />
-                  </span>
-                  <h3>{feature.title}</h3>
-                </article>
-              ))}
+            <div className="product-interface product-interface-one" aria-label="Scart One operations interface preview">
+              <div className="product-interface-header">
+                <strong>Scart One</strong>
+                <span>Business Operations</span>
+              </div>
+              <div className="product-interface-body">
+                <nav className="product-interface-nav" aria-label="Scart One interface sections">
+                  <strong>Workspace</strong>
+                  <span className="active">Overview</span>
+                  <span>Inventory</span>
+                  <span>POS</span>
+                  <span>Purchasing</span>
+                  <span>GST Reporting</span>
+                </nav>
+                <div className="product-interface-workspace">
+                  <div className="interface-workspace-heading">
+                    <div>
+                      <small>Connected platform</small>
+                      <strong>Operations Overview</strong>
+                    </div>
+                    <span>Business workspace</span>
+                  </div>
+                  <div className="erp-interface-grid">
+                    <article>
+                      <small>Inventory</small>
+                      <strong>Stock workspace</strong>
+                      <div className="interface-donut" aria-hidden="true" />
+                      <span>Items · locations · movements</span>
+                    </article>
+                    <article>
+                      <small>POS</small>
+                      <strong>Sales workflow</strong>
+                      <div className="interface-line-chart" aria-hidden="true">
+                        <i /><i /><i /><i /><i /><i />
+                      </div>
+                      <span>Daily retail operations</span>
+                    </article>
+                    <article className="interface-list-panel">
+                      <small>Purchasing</small>
+                      <strong>Purchase workflow</strong>
+                      <ul>
+                        <li><span>Supplier orders</span><b>Open</b></li>
+                        <li><span>Goods receiving</span><b>Ready</b></li>
+                        <li><span>Purchase records</span><b>Filed</b></li>
+                      </ul>
+                    </article>
+                    <article className="interface-list-panel">
+                      <small>GST Reporting</small>
+                      <strong>Reporting workspace</strong>
+                      <ul>
+                        <li><span>Sales records</span><b>Available</b></li>
+                        <li><span>Purchase records</span><b>Available</b></li>
+                        <li><span>Report review</span><b>Ready</b></li>
+                      </ul>
+                    </article>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <section className="scart-files-section" id="scart-files" aria-labelledby="scart-files-title">
-          <div className="section-inner scart-files-grid">
-            <div className="scart-files-intro">
-              <p className="eyebrow">Multi-entity document platform</p>
-              <h2 id="scart-files-title">Meet Scart Files</h2>
-              <p>
-                A structured business document platform for organizations that
-                need to organize, verify, search, report on, and manage records
-                across multiple companies within one unified workspace.
-              </p>
+          <div className="section-inner product-showcase-layout product-showcase-layout-files">
+            <div className="product-showcase-copy">
+              <p className="eyebrow">Scart Files</p>
+              <h2 id="scart-files-title">Multi-Entity Document Platform</h2>
+              <p>Keep business documents structured, verified, and ready when you need them.</p>
+
+              <div className="product-showcase-capabilities product-showcase-capabilities-files" aria-label="Scart Files capabilities">
+                {scartFilesCapabilities.map((capability) => (
+                  <span key={capability}>
+                    <i aria-hidden="true"><Files /></i>
+                    {capability}
+                  </span>
+                ))}
+              </div>
+
+              <a className="button button-primary product-showcase-cta" href="#contact">
+                Explore Scart Files
+                <ArrowRight size={17} strokeWidth={2.2} aria-hidden="true" />
+              </a>
             </div>
 
-            <div className="feature-grid scart-files-feature-grid">
-              {scartFilesFeatures.map(({ title, description, Icon }) => (
-                <article className="feature-card scart-files-feature-card" key={title}>
-                  <span className="feature-icon" aria-hidden="true">
-                    <Icon />
-                  </span>
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
+            <div className="product-interface product-interface-files" aria-label="Scart Files document workspace preview">
+              <div className="product-interface-header">
+                <strong>Scart Files</strong>
+                <span>Document Library</span>
+              </div>
+              <div className="product-interface-body">
+                <nav className="product-interface-nav" aria-label="Scart Files interface sections">
+                  <strong>Workspace</strong>
+                  <span className="active">Document Library</span>
+                  <span>Companies</span>
+                  <span>Document Types</span>
+                  <span>Verification</span>
+                  <span>Reports</span>
+                  <span>Audit Trail</span>
+                </nav>
+                <div className="product-interface-workspace files-workspace">
+                  <div className="interface-workspace-heading">
+                    <div>
+                      <small>Multi-company workspace</small>
+                      <strong>Document Library</strong>
+                    </div>
+                    <span>Search documents</span>
                   </div>
-                </article>
-              ))}
+                  <div className="files-status-grid">
+                    <span><small>Document Type</small><strong>Structured Filing</strong></span>
+                    <span><small>Status</small><strong>Verified</strong></span>
+                    <span><small>Status</small><strong>Pending Verification</strong></span>
+                    <span><small>Status</small><strong>Correction Required</strong></span>
+                  </div>
+                  <div className="document-table" role="table" aria-label="Document register preview">
+                    <div className="document-table-row document-table-head" role="row">
+                      <span role="columnheader">Document</span>
+                      <span role="columnheader">Company</span>
+                      <span role="columnheader">Document Type</span>
+                      <span role="columnheader">Status</span>
+                    </div>
+                    <div className="document-table-row" role="row">
+                      <strong role="cell">Purchase Invoice</strong><span role="cell">Company Workspace</span><span role="cell">Invoice</span><b className="verified" role="cell">Verified</b>
+                    </div>
+                    <div className="document-table-row" role="row">
+                      <strong role="cell">GST Return</strong><span role="cell">Company Workspace</span><span role="cell">Tax Document</span><b className="pending" role="cell">Pending Verification</b>
+                    </div>
+                    <div className="document-table-row" role="row">
+                      <strong role="cell">Bank Statement</strong><span role="cell">Company Workspace</span><span role="cell">Statement</span><b className="verified" role="cell">Verified</b>
+                    </div>
+                    <div className="document-table-row" role="row">
+                      <strong role="cell">Company Record</strong><span role="cell">Company Workspace</span><span role="cell">Corporate Record</span><b className="correction" role="cell">Correction Required</b>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -998,7 +1213,7 @@ function App() {
 
       <footer className="footer">
         <div className="section-inner footer-grid">
-          <div>
+          <div className="footer-intro">
             <a className="brand footer-brand" href="#home">
               <img
                 className="brand-logo footer-logo"
@@ -1008,16 +1223,33 @@ function App() {
                 height="1152"
               />
             </a>
+            <p>Software, infrastructure, and support designed for real operations.</p>
           </div>
 
           <div>
-            <h2>Quick Links</h2>
-            <a href="#home">Home</a>
-            <a href="#solutions">Solutions</a>
-            <a href="#industries">Industries</a>
-            <a href="#work">Work</a>
-            <a href="#products">Products</a>
+            <h2>Solutions</h2>
+            {solutions.map((solution) => (
+              <a href="#solutions" key={solution.title}>{solution.title}</a>
+            ))}
+          </div>
+
+          <div>
+            <h2>Industries</h2>
+            {industries.map((industry) => (
+              <a href="#industries" key={industry.title}>{industry.title}</a>
+            ))}
+          </div>
+
+          <div>
+            <h2>Products</h2>
+            <a href="#scart-one">Scart One</a>
+            <a href="#scart-files">Scart Files</a>
+          </div>
+
+          <div>
+            <h2>Company</h2>
             <a href="#about">About</a>
+            <a href="#work">Work</a>
             <a href="#contact">Contact</a>
           </div>
 
