@@ -2299,26 +2299,6 @@ main {
   color: #ffffff;
 }
 
-.nav-links a[href="#contact"] {
-  height: 38px;
-  padding: 0 15px;
-  border: 1px solid rgba(63, 140, 255, 0.42);
-  border-radius: 7px;
-  color: #d9eaff;
-  background: rgba(36, 105, 218, 0.1);
-}
-
-.nav-links a[href="#contact"]::after {
-  display: none;
-}
-
-.nav-links a[href="#contact"]:hover,
-.nav-links a[href="#contact"].active {
-  border-color: rgba(80, 178, 255, 0.7);
-  color: #ffffff;
-  background: rgba(41, 119, 241, 0.18);
-}
-
 .menu-toggle,
 .drawer-close {
   border: 1px solid rgba(106, 153, 207, 0.22);
@@ -2951,10 +2931,6 @@ button:focus-visible {
   .nav-links a {
     font-size: 0.84rem;
   }
-
-  .nav-links a[href="#contact"] {
-    padding: 0 11px;
-  }
 }
 
 @media (max-width: 1040px) {
@@ -3130,19 +3106,6 @@ html[data-theme='light'] .nav-links a {
 html[data-theme='light'] .nav-links a:hover,
 html[data-theme='light'] .nav-links a.active {
   color: #0d4fae;
-}
-
-html[data-theme='light'] .nav-links a[href='#contact'] {
-  border-color: rgba(23, 104, 223, 0.28);
-  color: #164f9f;
-  background: rgba(23, 104, 223, 0.06);
-}
-
-html[data-theme='light'] .nav-links a[href='#contact']:hover,
-html[data-theme='light'] .nav-links a[href='#contact'].active {
-  border-color: rgba(23, 104, 223, 0.48);
-  color: #0a438f;
-  background: rgba(23, 104, 223, 0.11);
 }
 
 html[data-theme='light'] .theme-toggle {
@@ -7195,5 +7158,372 @@ html[data-theme='light'] .product-family-system {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Final manual hero hub asset treatment */
+
+.hero-hub-frame {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  clip-path: none !important;
+  overflow: visible !important;
+}
+
+.hero-hub-frame::before,
+.hero-hub-frame::after {
+  display: none !important;
+}
+
+.hero-hub-frame img {
+  position: relative;
+  z-index: 3;
+
+  width: 84% !important;
+  height: 84% !important;
+
+  object-fit: contain;
+  transform: none !important;
+  filter:
+    drop-shadow(0 0 8px rgba(46, 186, 255, 1))
+    drop-shadow(0 0 10px rgba(46, 186, 255, 0.38)) !important;
+}
+
+.hero-ecosystem-hub::before,
+.hero-ecosystem-hub::after {
+  display: none !important;
+}
+
+.hero-hub-platform-image {
+  display: block;
+  height: auto;
+  object-fit: contain;
+}
+/* Light hero layering: platform behind connectors, emblem above connectors */
+html[data-theme='light'] .hero-ecosystem-hub {
+  z-index: auto;
+  margin-left: -25%;
+  transform: none;
+}
+
+html[data-theme='light'] .hero-hub-platform-image {
+  z-index: 2;
+}
+
+html[data-theme='light'] .hero-ecosystem-connections {
+  z-index: 3;
+}
+
+html[data-theme='light'] .hero-hub-frame {
+  z-index: 5;
+}
+
+html[data-theme='light'] .hero-capability-node {
+  z-index: 6;
+}
+/* Final desktop hero capability alignment */
+@media (min-width: 1100px) {
+  /* Left column: one clean vertical axis */
+  .hero-capability-operations,
+  .hero-capability-documents,
+  .hero-capability-infrastructure {
+    left: 0 !important;
+  }
+
+  /* Right column: one clean vertical axis */
+  .hero-capability-analytics,
+  .hero-capability-security,
+  .hero-capability-reporting {
+    right: 0 !important;
+  }
+
+  /* Lift lower row away from the panel border */
+  .hero-capability-infrastructure,
+  .hero-capability-reporting {
+    bottom: 8% !important;
+  }
+}
+/* Final light-mode hero capability icon treatment */
+html[data-theme='light'] .hero-capability-node > span {
+  border-color: rgba(32, 136, 199, 0.6) !important;
+
+  color: #2088c7 !important;
+
+  background:
+    radial-gradient(
+      circle at 35% 28%,
+      rgba(53, 200, 255, 0.14),
+      transparent 55%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(240, 247, 253, 0.96) 100%
+    ) !important;
+
+  box-shadow:
+    0 7px 18px rgba(23, 104, 223, 0.10),
+    0 0 0 1px rgba(23, 104, 223, 0.10),
+    0 0 0 1px rgba(255, 255, 255, 0.92) inset !important;
+}
+/* Final light-mode hero connector contrast */
+html[data-theme='light'] .hero-connection-core {
+  opacity: 0.88 !important;
+}
+
+html[data-theme='light'] .hero-connection-core use {
+  opacity: 1 !important;
+  stroke-width: 1.25 !important;
+  filter:
+    drop-shadow(0 0 2px rgba(48, 178, 225, 0.48))
+    drop-shadow(0 0 5px rgba(23, 104, 223, 0.18)) !important;
+}
+
+html[data-theme='light'] .hero-connection-glow {
+  opacity: 0.28 !important;
+}
+
+html[data-theme='light'] .hero-connection-glow use {
+  opacity: 1 !important;
+}
+/* Product interface Scart branding */
+.product-interface-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.product-interface-brand img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.product-interface-brand strong {
+  padding-left: 0;
+}
+
+.product-interface-brand strong::before {
+  display: none;
+}
+
+/* Products overview: product identity treatment */
+.products-section .product-family-system .product-overview-card {
+  isolation: isolate;
+}
+
+.products-section .product-family-system .product-overview-card-primary {
+  border-color: rgba(61, 139, 237, 0.3);
+  background:
+    linear-gradient(132deg, transparent 62%, rgba(75, 155, 255, 0.025) 62.2%, transparent 62.8%),
+    linear-gradient(147deg, transparent 70%, rgba(75, 155, 255, 0.02) 70.2%, transparent 70.8%),
+    radial-gradient(circle at 96% 88%, rgba(36, 119, 238, 0.22), transparent 43%),
+    linear-gradient(150deg, #10263e 0%, #091a2c 70%);
+}
+
+.products-section .product-family-system .product-overview-card-files {
+  border-color: rgba(60, 177, 218, 0.28);
+  background:
+    linear-gradient(132deg, transparent 62%, rgba(54, 199, 229, 0.025) 62.2%, transparent 62.8%),
+    linear-gradient(147deg, transparent 70%, rgba(54, 199, 229, 0.02) 70.2%, transparent 70.8%),
+    radial-gradient(circle at 96% 88%, rgba(31, 166, 210, 0.2), transparent 43%),
+    linear-gradient(150deg, #0e263b 0%, #081a2b 70%);
+}
+
+.products-section .product-family-system .product-overview-card::before {
+  z-index: 1;
+  height: 2px;
+  opacity: 1;
+  box-shadow: 0 0 16px rgba(55, 145, 255, 0.42);
+}
+
+.products-section .product-family-system .product-overview-card-files::before {
+  box-shadow: 0 0 16px rgba(53, 197, 229, 0.38);
+}
+
+.products-section .product-family-system .product-overview-card::after {
+  position: absolute;
+  right: -8%;
+  bottom: -20%;
+  z-index: 0;
+  width: 64%;
+  height: 72%;
+  border: 1px solid rgba(91, 159, 225, 0.055);
+  background:
+    linear-gradient(rgba(91, 159, 225, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91, 159, 225, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  content: '';
+  opacity: 0.62;
+  transform: perspective(420px) rotateX(61deg) rotateZ(-12deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.products-section .product-family-system .product-overview-card > :not(.product-card-watermark) {
+  position: relative;
+  z-index: 2;
+}
+
+.products-section .product-card-watermark {
+  position: absolute;
+  right: -54px;
+  bottom: -66px;
+  z-index: 1;
+  display: grid;
+  width: 258px;
+  height: 258px;
+  place-items: center;
+  color: #4b9cff;
+  opacity: 0.085;
+  filter: drop-shadow(0 0 26px rgba(49, 139, 255, 0.34));
+  pointer-events: none;
+}
+
+.products-section .product-overview-card-files .product-card-watermark {
+  color: #43c4e3;
+  opacity: 0.09;
+  filter: drop-shadow(0 0 26px rgba(48, 191, 225, 0.3));
+}
+
+.products-section .product-card-watermark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.65;
+}
+
+.products-section .product-family-system .product-card-icon {
+  border: 1px solid rgba(173, 215, 255, 0.18);
+  box-shadow:
+    0 16px 34px rgba(16, 88, 219, 0.32),
+    0 0 24px rgba(48, 139, 255, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.products-section .product-family-system .product-card-icon-files {
+  border-color: rgba(163, 229, 244, 0.18);
+  box-shadow:
+    0 16px 34px rgba(13, 91, 187, 0.28),
+    0 0 24px rgba(53, 198, 229, 0.16),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.products-section .product-family-system .product-link {
+  z-index: 3;
+}
+
+html[data-theme='light'] .products-section .product-family-system .product-overview-card-primary {
+  border-color: rgba(37, 111, 194, 0.2);
+  background:
+    linear-gradient(132deg, transparent 62%, rgba(35, 111, 205, 0.018) 62.2%, transparent 62.8%),
+    linear-gradient(147deg, transparent 70%, rgba(35, 111, 205, 0.016) 70.2%, transparent 70.8%),
+    radial-gradient(circle at 96% 88%, rgba(39, 125, 226, 0.09), transparent 42%),
+    #ffffff;
+  box-shadow:
+    0 22px 46px rgba(24, 57, 91, 0.09),
+    0 1px 0 rgba(255, 255, 255, 0.96) inset;
+}
+
+html[data-theme='light'] .products-section .product-family-system .product-overview-card-files {
+  border-color: rgba(37, 141, 179, 0.19);
+  background:
+    linear-gradient(132deg, transparent 62%, rgba(27, 160, 196, 0.018) 62.2%, transparent 62.8%),
+    linear-gradient(147deg, transparent 70%, rgba(27, 160, 196, 0.016) 70.2%, transparent 70.8%),
+    radial-gradient(circle at 96% 88%, rgba(33, 169, 203, 0.08), transparent 42%),
+    #ffffff;
+  box-shadow:
+    0 22px 46px rgba(24, 57, 91, 0.085),
+    0 1px 0 rgba(255, 255, 255, 0.96) inset;
+}
+
+html[data-theme='light'] .products-section .product-family-system .product-overview-card::after {
+  border-color: rgba(39, 112, 187, 0.045);
+  background:
+    linear-gradient(rgba(39, 112, 187, 0.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(39, 112, 187, 0.026) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.5;
+}
+
+html[data-theme='light'] .products-section .product-card-watermark {
+  color: #176fce;
+  opacity: 0.052;
+  filter: none;
+}
+
+html[data-theme='light'] .products-section .product-overview-card-files .product-card-watermark {
+  color: #078ebc;
+  opacity: 0.052;
+}
+
+html[data-theme='light'] .products-section .product-family-system .product-card-icon {
+  box-shadow:
+    0 14px 28px rgba(26, 91, 178, 0.2),
+    0 0 20px rgba(46, 135, 235, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.24) inset;
+}
+
+@media (max-width: 768px) {
+  .products-section .product-card-watermark {
+    right: -42px;
+    bottom: -48px;
+    width: 196px;
+    height: 196px;
+  }
+
+  .products-section .product-family-system .product-overview-card::after {
+    right: -18%;
+    bottom: -24%;
+    width: 76%;
+    height: 66%;
+  }
+}
+
+/* Mobile hero density refinement */
+@media (max-width: 768px) {
+  .hero-product-module {
+    min-height: 82px;
+    padding: 10px 11px;
+  }
+
+  .hero-product-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .hero-product-module strong {
+    margin-top: 4px;
+  }
+
+  .hero-product-module p {
+    margin-top: 6px;
+  }
+
+  .hero-ecosystem-map {
+    --mobile-center-height: clamp(122px, 33vw, 146px);
+    --mobile-hub-width: clamp(88px, 25vw, 112px);
+    --mobile-platform-width: clamp(176px, 50vw, 232px);
+    gap: 6px clamp(8px, 2.5vw, 14px);
+    margin: 4px 10px 0;
+    padding: 8px 8px 14px;
+  }
+
+  html[data-theme='dark'] .hero-ecosystem-hub,
+  html[data-theme='light'] .hero-ecosystem-hub {
+    margin-left: 0;
+  }
+
+  .hero-hub-frame img {
+    width: 84% !important;
+    height: 84% !important;
   }
 }

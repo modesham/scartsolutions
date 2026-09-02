@@ -38,8 +38,9 @@ import scartPage04 from './assets/portfolio/scart-solutions/page-04.webp'
 import scartMockup from './assets/scart-mockup.png'
 import scartLogoDark from './assets/Logo_Dark.png'
 import scartLogoWhite from './assets/Logo_White.png'
-import scartHubLogo from './assets/Scart.png'
+import scartHubLogo from './assets/Scart_Emblem.webp'
 import scartHubPlatformDark from './assets/hero/scart-hub-platform-dark.png'
+import scartHubPlatformSoft from './assets/hero/scart-hub-platform-soft.png'
 import './App.css'
 
 const PortfolioProjectModal = lazy(() => import('./PortfolioProjectModal'))
@@ -101,7 +102,6 @@ const navLinks = [
   { label: 'Work', href: '#work', id: 'work' },
   { label: 'Products', href: '#products', id: 'products' },
   { label: 'About', href: '#about', id: 'about' },
-  { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
 const trustItems: IconCard[] = [
@@ -254,7 +254,6 @@ const sectionIds = [
   'work',
   'products',
   'about',
-  'contact',
 ]
 
 function getStoredTheme(): SiteTheme | null {
@@ -533,11 +532,7 @@ function App() {
         }
       }
 
-      const nearBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 20
-
-      setActiveSection(nearBottom ? 'contact' : current)
+      setActiveSection(current)
     }
 
     let animationFrame = 0
@@ -740,7 +735,7 @@ function App() {
                     <strong>Scart Solutions Products</strong>
                     <div>
                       <span><i aria-hidden="true" />Designed and built in-house</span>
-                      <b>2 Platforms</b>
+
                     </div>
                   </div>
 
@@ -785,11 +780,11 @@ function App() {
                           <feGaussianBlur stdDeviation="3" />
                         </filter>
                         <path id="hero-path-operations" d="M394 164c-36-12-34-70-64-88-14-8-30-8-48-8h-76" />
-                        <path id="hero-path-documents" d="M392 205c-34-3-43-18-73-15-33 3-65 7-95 4h-26" />
-                        <path id="hero-path-infrastructure" d="M396 236c-34 16-41 66-75 93-14 11-30 15-51 15h-72" />
+                        <path id="hero-path-documents" d="M392 205c-34-3-43-18-73-15-33 3-65 7-95 4h-18" />
+                        <path id="hero-path-infrastructure" d="M378 214 C378 266 360 312 326 330 C298 340 264 334 238 334 H206" />
                         <path id="hero-path-analytics" d="M426 164c36-12 34-70 64-88 14-8 30-8 48-8h76" />
-                        <path id="hero-path-security" d="M428 205c34-3 43-18 73-15 33 3 65 7 95 4h34" />
-                        <path id="hero-path-reporting" d="M424 236c34 16 41 66 75 93 14 11 30 15 51 15h100" />
+                        <path id="hero-path-security" d="M428 205c34-3 43-18 73-15 33 3 65 7 95 4h18" />
+                        <path id="hero-path-reporting" d="M442 214 C442 266 460 312 494 330 C522 340 556 334 582 334 H614" />
                         <path id="hero-mobile-path-operations" d="M282 46h28c35 0 45 62 84 104" />
                         <path id="hero-mobile-path-documents" d="M330 125h12c24 0 30 28 50 44" />
                         <path id="hero-mobile-path-infrastructure" d="M300 354h20c38 0 42-82 76-108" />
@@ -816,19 +811,26 @@ function App() {
                           <use href="#hero-path-reporting" className="hero-connection-right" />
                         </g>
                         <g className="hero-connection-points">
-                          <circle cx="310" cy="68" r="2.6" />
-                          <circle cx="302" cy="194" r="2.6" />
-                          <circle cx="296" cy="344" r="2.6" />
-                          <circle cx="510" cy="68" r="2.6" />
-                          <circle cx="518" cy="194" r="2.6" />
-                          <circle cx="524" cy="344" r="2.6" />
-                          <circle className="hero-connection-terminal" cx="206" cy="68" r="1.8" />
-                          <circle className="hero-connection-terminal" cx="198" cy="194" r="1.8" />
-                          <circle className="hero-connection-terminal" cx="198" cy="344" r="1.8" />
-                          <circle className="hero-connection-terminal" cx="614" cy="68" r="1.8" />
-                          <circle className="hero-connection-terminal" cx="630" cy="194" r="1.8" />
-                          <circle className="hero-connection-terminal" cx="650" cy="344" r="1.8" />
-                        </g>
+                            {/* Operations / Documents / Infrastructure highlights */}
+                            <circle cx="310" cy="68" r="2.6" />
+                            <circle cx="302" cy="194" r="2.6" />
+                            <circle cx="296" cy="334" r="2.6" />
+
+                            {/* Analytics / Security / Reporting highlights */}
+                            <circle cx="510" cy="68" r="2.6" />
+                            <circle cx="518" cy="194" r="2.6" />
+                            <circle cx="524" cy="334" r="2.6" />
+
+                            {/* Left terminals — all aligned */}
+                            <circle className="hero-connection-terminal" cx="206" cy="68" r="1.8" />
+                            <circle className="hero-connection-terminal" cx="206" cy="194" r="1.8" />
+                            <circle className="hero-connection-terminal" cx="206" cy="334" r="1.8" />
+
+                            {/* Right terminals — all aligned */}
+                            <circle className="hero-connection-terminal" cx="614" cy="68" r="1.8" />
+                            <circle className="hero-connection-terminal" cx="614" cy="194" r="1.8" />
+                            <circle className="hero-connection-terminal" cx="614" cy="334" r="1.8" />
+                          </g>    
                       </g>
 
                       <g className="hero-connections-mobile">
@@ -891,26 +893,17 @@ function App() {
                     </div>
 
                     <div className="hero-ecosystem-hub" aria-hidden="true">
-                      {siteTheme === 'dark' ? (
                         <img
                           className="hero-hub-platform-image"
-                          src={scartHubPlatformDark}
+                          src={siteTheme === 'dark' ? scartHubPlatformDark : scartHubPlatformSoft}
                           alt=""
                           draggable={false}
                         />
-                      ) : (
-                        <>
-                          <span className="hero-hub-bloom" />
-                          <span className="hero-hub-platform" />
-                          <span className="hero-hub-ring hero-hub-ring-outer" />
-                          <span className="hero-hub-ring hero-hub-ring-middle" />
-                          <span className="hero-hub-ring hero-hub-ring-inner" />
-                        </>
-                      )}
-                      <span className="hero-hub-frame">
-                        <img src={scartHubLogo} alt="" />
-                      </span>
-                    </div>
+
+                        <span className="hero-hub-frame">
+                          <img src={scartHubLogo} alt="" draggable={false} />
+                        </span>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -1051,6 +1044,9 @@ function App() {
                   of retail, wholesale, distribution, and growing businesses.
                 </p>
                 <CapabilityTags items={scartOneCapabilities} />
+                <span className="product-card-watermark" aria-hidden="true">
+                  <ModuleIcon icon="inventory" />
+                </span>
                 <a className="product-link" href="#scart-one">
                   Meet Scart One
                   <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
@@ -1071,6 +1067,9 @@ function App() {
                   documents across multiple companies within one unified workspace.
                 </p>
                 <CapabilityTags items={scartFilesCapabilities} />
+                <span className="product-card-watermark" aria-hidden="true">
+                  <Files />
+                </span>
                 <a className="product-link" href="#scart-files">
                   Meet Scart Files
                   <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
@@ -1103,10 +1102,14 @@ function App() {
             </div>
 
             <div className="product-interface product-interface-one" aria-label="Scart One operations interface preview">
-              <div className="product-interface-header">
+            <div className="product-interface-header">
+              <div className="product-interface-brand">
+                <img src={scartHubLogo} alt="" draggable={false} />
                 <strong>Scart One</strong>
-                <span>Business Operations</span>
               </div>
+
+              <span>Business Operations</span>
+            </div>
               <div className="product-interface-body">
                 <nav className="product-interface-nav" aria-label="Scart One interface sections">
                   <strong>Workspace</strong>
@@ -1188,7 +1191,10 @@ function App() {
 
             <div className="product-interface product-interface-files" aria-label="Scart Files document workspace preview">
               <div className="product-interface-header">
+              <div className="product-interface-brand">
+              <img src={scartHubLogo} alt="" draggable={false} />
                 <strong>Scart Files</strong>
+                </div>
                 <span>Document Library</span>
               </div>
               <div className="product-interface-body">
