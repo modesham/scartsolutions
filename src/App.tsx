@@ -38,8 +38,8 @@ import scartPage04 from './assets/portfolio/scart-solutions/page-04.webp'
 import scartMockup from './assets/scart-mockup.png'
 import scartLogoDark from './assets/Logo_Dark.png'
 import scartLogoWhite from './assets/Logo_White.png'
-import scartHubDark from './assets/Scart-Slogo-White.png'
-import scartHubLight from './assets/Scart-Slogo-dark.png'
+import scartHubLogo from './assets/Scart.png'
+import scartHubPlatformDark from './assets/hero/scart-hub-platform-dark.png'
 import './App.css'
 
 const PortfolioProjectModal = lazy(() => import('./PortfolioProjectModal'))
@@ -107,8 +107,8 @@ const navLinks = [
 const trustItems: IconCard[] = [
   {
     icon: 'award',
-    title: '15+ Years Experience',
-    description: 'Established delivery across business-critical systems.',
+    title: '15+ Years in IT & Infrastructure',
+    description: 'Hands-on experience across networking, security, systems, and business technology.',
   },
   {
     icon: 'code',
@@ -484,7 +484,6 @@ function App() {
   }, [siteTheme])
 
   const scartLogo = siteTheme === 'dark' ? scartLogoWhite : scartLogoDark
-  const scartHubLogo = siteTheme === 'dark' ? scartHubDark : scartHubLight
 
   const handleThemeToggle = () => {
     setSiteTheme((currentTheme) => {
@@ -771,18 +770,99 @@ function App() {
 
                   <div className="hero-ecosystem-map">
                     <svg className="hero-ecosystem-connections" viewBox="0 0 820 390" aria-hidden="true">
-                      <path d="M206 66h112c40 0 34 72 76 96" />
-                      <path d="M198 193h108c36 0 46 4 86 13" />
-                      <path d="M294 354c44-48 54-96 101-116" />
-                      <path d="M616 66h-104c-40 0-38 70-78 96" />
-                      <path d="M636 193H530c-42 0-52 5-94 13" />
-                      <path d="M586 350c-46-44-54-92-150-112" />
-                      <circle cx="318" cy="66" r="4" />
-                      <circle cx="306" cy="193" r="4" />
-                      <circle cx="294" cy="354" r="4" />
-                      <circle cx="512" cy="66" r="4" />
-                      <circle cx="530" cy="193" r="4" />
-                      <circle cx="586" cy="350" r="4" />
+                      <defs>
+                        <linearGradient id="hero-connector-left" x1="410" y1="0" x2="190" y2="0" gradientUnits="userSpaceOnUse">
+                          <stop offset="0" stopColor="#e7fcff" />
+                          <stop offset="0.28" stopColor="#43d7ff" stopOpacity="0.96" />
+                          <stop offset="1" stopColor="#2587c2" stopOpacity="0.48" />
+                        </linearGradient>
+                        <linearGradient id="hero-connector-right" x1="410" y1="0" x2="630" y2="0" gradientUnits="userSpaceOnUse">
+                          <stop offset="0" stopColor="#e7fcff" />
+                          <stop offset="0.28" stopColor="#43d7ff" stopOpacity="0.96" />
+                          <stop offset="1" stopColor="#2587c2" stopOpacity="0.48" />
+                        </linearGradient>
+                        <filter id="hero-connector-soft-glow" x="0" y="0" width="820" height="390" filterUnits="userSpaceOnUse">
+                          <feGaussianBlur stdDeviation="3" />
+                        </filter>
+                        <path id="hero-path-operations" d="M394 164c-36-12-34-70-64-88-14-8-30-8-48-8h-76" />
+                        <path id="hero-path-documents" d="M392 205c-34-3-43-18-73-15-33 3-65 7-95 4h-26" />
+                        <path id="hero-path-infrastructure" d="M396 236c-34 16-41 66-75 93-14 11-30 15-51 15h-72" />
+                        <path id="hero-path-analytics" d="M426 164c36-12 34-70 64-88 14-8 30-8 48-8h76" />
+                        <path id="hero-path-security" d="M428 205c34-3 43-18 73-15 33 3 65 7 95 4h34" />
+                        <path id="hero-path-reporting" d="M424 236c34 16 41 66 75 93 14 11 30 15 51 15h100" />
+                        <path id="hero-mobile-path-operations" d="M282 46h28c35 0 45 62 84 104" />
+                        <path id="hero-mobile-path-documents" d="M330 125h12c24 0 30 28 50 44" />
+                        <path id="hero-mobile-path-infrastructure" d="M300 354h20c38 0 42-82 76-108" />
+                        <path id="hero-mobile-path-analytics" d="M538 46h-28c-35 0-45 62-84 104" />
+                        <path id="hero-mobile-path-security" d="M490 125h-12c-24 0-30 28-50 44" />
+                        <path id="hero-mobile-path-reporting" d="M520 354h-20c-38 0-42-82-76-108" />
+                      </defs>
+
+                      <g className="hero-connections-desktop">
+                        <g className="hero-connection-glow" filter="url(#hero-connector-soft-glow)">
+                          <use href="#hero-path-operations" className="hero-connection-left" />
+                          <use href="#hero-path-documents" className="hero-connection-left" />
+                          <use href="#hero-path-infrastructure" className="hero-connection-left" />
+                          <use href="#hero-path-analytics" className="hero-connection-right" />
+                          <use href="#hero-path-security" className="hero-connection-right" />
+                          <use href="#hero-path-reporting" className="hero-connection-right" />
+                        </g>
+                        <g className="hero-connection-core">
+                          <use href="#hero-path-operations" className="hero-connection-left" />
+                          <use href="#hero-path-documents" className="hero-connection-left" />
+                          <use href="#hero-path-infrastructure" className="hero-connection-left" />
+                          <use href="#hero-path-analytics" className="hero-connection-right" />
+                          <use href="#hero-path-security" className="hero-connection-right" />
+                          <use href="#hero-path-reporting" className="hero-connection-right" />
+                        </g>
+                        <g className="hero-connection-points">
+                          <circle cx="310" cy="68" r="2.6" />
+                          <circle cx="302" cy="194" r="2.6" />
+                          <circle cx="296" cy="344" r="2.6" />
+                          <circle cx="510" cy="68" r="2.6" />
+                          <circle cx="518" cy="194" r="2.6" />
+                          <circle cx="524" cy="344" r="2.6" />
+                          <circle className="hero-connection-terminal" cx="206" cy="68" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="198" cy="194" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="198" cy="344" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="614" cy="68" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="630" cy="194" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="650" cy="344" r="1.8" />
+                        </g>
+                      </g>
+
+                      <g className="hero-connections-mobile">
+                        <g className="hero-connection-glow" filter="url(#hero-connector-soft-glow)">
+                          <use href="#hero-mobile-path-operations" className="hero-connection-left" />
+                          <use href="#hero-mobile-path-documents" className="hero-connection-left" />
+                          <use href="#hero-mobile-path-infrastructure" className="hero-connection-left" />
+                          <use href="#hero-mobile-path-analytics" className="hero-connection-right" />
+                          <use href="#hero-mobile-path-security" className="hero-connection-right" />
+                          <use href="#hero-mobile-path-reporting" className="hero-connection-right" />
+                        </g>
+                        <g className="hero-connection-core">
+                          <use href="#hero-mobile-path-operations" className="hero-connection-left" />
+                          <use href="#hero-mobile-path-documents" className="hero-connection-left" />
+                          <use href="#hero-mobile-path-infrastructure" className="hero-connection-left" />
+                          <use href="#hero-mobile-path-analytics" className="hero-connection-right" />
+                          <use href="#hero-mobile-path-security" className="hero-connection-right" />
+                          <use href="#hero-mobile-path-reporting" className="hero-connection-right" />
+                        </g>
+                        <g className="hero-connection-points">
+                          <circle cx="310" cy="46" r="2.6" />
+                          <circle cx="342" cy="125" r="2.6" />
+                          <circle cx="320" cy="354" r="2.6" />
+                          <circle cx="510" cy="46" r="2.6" />
+                          <circle cx="478" cy="125" r="2.6" />
+                          <circle cx="500" cy="354" r="2.6" />
+                          <circle className="hero-connection-terminal" cx="282" cy="46" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="330" cy="125" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="300" cy="354" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="538" cy="46" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="490" cy="125" r="1.8" />
+                          <circle className="hero-connection-terminal" cx="520" cy="354" r="1.8" />
+                        </g>
+                      </g>
                     </svg>
 
                     <div className="hero-capability-node hero-capability-operations">
@@ -811,11 +891,22 @@ function App() {
                     </div>
 
                     <div className="hero-ecosystem-hub" aria-hidden="true">
-                      <span className="hero-hub-bloom" />
-                      <span className="hero-hub-platform" />
-                      <span className="hero-hub-ring hero-hub-ring-outer" />
-                      <span className="hero-hub-ring hero-hub-ring-middle" />
-                      <span className="hero-hub-ring hero-hub-ring-inner" />
+                      {siteTheme === 'dark' ? (
+                        <img
+                          className="hero-hub-platform-image"
+                          src={scartHubPlatformDark}
+                          alt=""
+                          draggable={false}
+                        />
+                      ) : (
+                        <>
+                          <span className="hero-hub-bloom" />
+                          <span className="hero-hub-platform" />
+                          <span className="hero-hub-ring hero-hub-ring-outer" />
+                          <span className="hero-hub-ring hero-hub-ring-middle" />
+                          <span className="hero-hub-ring hero-hub-ring-inner" />
+                        </>
+                      )}
                       <span className="hero-hub-frame">
                         <img src={scartHubLogo} alt="" />
                       </span>
