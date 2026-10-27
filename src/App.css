@@ -8679,3 +8679,104 @@ html[data-theme='light'] .reason-item span {
   background: var(--scart-cyan);
   box-shadow: 0 0 0 5px rgb(var(--scart-cyan-rgb) / 0.1);
 }
+
+/* Mobile-only hero hub and advantage-card flow. Tablet and desktop stay unchanged. */
+@media (max-width: 767px) {
+  .hero-ecosystem-map {
+    display: grid;
+    height: auto;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: var(--mobile-center-height) repeat(3, auto);
+    align-items: start;
+    column-gap: clamp(10px, 3vw, 16px);
+    row-gap: 14px;
+    margin-top: 12px;
+    padding: 10px 10px 16px;
+  }
+
+  .hero-ecosystem-connections,
+  .hero-connections-desktop,
+  .hero-connections-mobile {
+    display: none !important;
+  }
+
+  .hero-ecosystem-hub {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .hero-capability-node {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    align-self: stretch;
+    justify-self: stretch;
+  }
+
+  .hero-capability-node strong,
+  .hero-capability-node small {
+    max-width: 100%;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .hero-capability-operations {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .hero-capability-analytics {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .hero-capability-documents {
+    grid-row: 3;
+    grid-column: 1;
+  }
+
+  .hero-capability-security {
+    grid-row: 3;
+    grid-column: 2;
+  }
+
+  .hero-capability-infrastructure {
+    grid-row: 4;
+    grid-column: 1;
+  }
+
+  .hero-capability-reporting {
+    grid-row: 4;
+    grid-column: 2;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .difference-section .four-column {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .difference-section .difference-card,
+  .difference-section .difference-card:nth-child(even),
+  .difference-section .difference-card:nth-child(even):hover {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .difference-section .difference-card h3,
+  .difference-section .difference-card p {
+    max-width: 100%;
+    overflow: visible;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+}
