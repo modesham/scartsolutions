@@ -36,9 +36,10 @@ import scartPage02 from './assets/portfolio/scart-solutions/page-02.webp'
 import scartPage03 from './assets/portfolio/scart-solutions/page-03.webp'
 import scartPage04 from './assets/portfolio/scart-solutions/page-04.webp'
 import scartMockup from './assets/scart-mockup.png'
-import scartLogoDark from './assets/Logo_Dark.png'
-import scartLogoWhite from './assets/Logo_White.png'
-import scartHubLogo from './assets/Scart_Emblem.webp'
+import scartHeroEmblemDark from './assets/new/Scart_hero_Emblem_dark_mode.svg'
+import scartHeroEmblemLight from './assets/new/Scart_hero_Emblem_light_mode.svg'
+import scartLogoDark from './assets/new/scart_logo_dark.svg'
+import scartLogoLight from './assets/new/scart_logo_light.svg'
 import scartHubPlatformDark from './assets/hero/scart-hub-platform-dark.png'
 import scartHubPlatformSoft from './assets/hero/scart-hub-platform-soft.png'
 import './App.css'
@@ -482,7 +483,8 @@ function App() {
     document.documentElement.style.colorScheme = siteTheme
   }, [siteTheme])
 
-  const scartLogo = siteTheme === 'dark' ? scartLogoWhite : scartLogoDark
+  const scartLogo = siteTheme === 'dark' ? scartLogoLight : scartLogoDark
+  const scartHubLogo = siteTheme === 'dark' ? scartHeroEmblemDark : scartHeroEmblemLight
 
   const handleThemeToggle = () => {
     setSiteTheme((currentTheme) => {
@@ -617,8 +619,8 @@ function App() {
               className="brand-logo"
               src={scartLogo}
               alt="Scart Solutions"
-              width="2048"
-              height="1152"
+              width="20165"
+              height="6918"
             />
           </a>
 
@@ -767,18 +769,36 @@ function App() {
                     <svg className="hero-ecosystem-connections" viewBox="0 0 820 390" aria-hidden="true">
                       <defs>
                         <linearGradient id="hero-connector-left" x1="410" y1="0" x2="190" y2="0" gradientUnits="userSpaceOnUse">
-                          <stop offset="0" stopColor="#e7fcff" />
-                          <stop offset="0.28" stopColor="#43d7ff" stopOpacity="0.96" />
-                          <stop offset="1" stopColor="#2587c2" stopOpacity="0.48" />
+                          <stop offset="0" stopColor="#E2FAFC" />
+                          <stop offset="0.28" stopColor="#00AABE" stopOpacity="0.96" />
+                          <stop offset="1" stopColor="#00537D" stopOpacity="0.48" />
                         </linearGradient>
                         <linearGradient id="hero-connector-right" x1="410" y1="0" x2="630" y2="0" gradientUnits="userSpaceOnUse">
-                          <stop offset="0" stopColor="#e7fcff" />
-                          <stop offset="0.28" stopColor="#43d7ff" stopOpacity="0.96" />
-                          <stop offset="1" stopColor="#2587c2" stopOpacity="0.48" />
+                          <stop offset="0" stopColor="#E2FAFC" />
+                          <stop offset="0.28" stopColor="#00AABE" stopOpacity="0.96" />
+                          <stop offset="1" stopColor="#00537D" stopOpacity="0.48" />
                         </linearGradient>
                         <filter id="hero-connector-soft-glow" x="0" y="0" width="820" height="390" filterUnits="userSpaceOnUse">
                           <feGaussianBlur stdDeviation="3" />
                         </filter>
+                        <radialGradient id="hero-connector-clearance-desktop" cx="50%" cy="50%" r="50%">
+                          <stop offset="0" stopColor="black" />
+                          <stop offset="0.7" stopColor="black" />
+                          <stop offset="1" stopColor="white" />
+                        </radialGradient>
+                        <radialGradient id="hero-connector-clearance-mobile" cx="50%" cy="50%" r="50%">
+                          <stop offset="0" stopColor="black" />
+                          <stop offset="0.68" stopColor="black" />
+                          <stop offset="1" stopColor="white" />
+                        </radialGradient>
+                        <mask id="hero-connector-mask-desktop" x="0" y="0" width="820" height="390" maskUnits="userSpaceOnUse">
+                          <rect width="820" height="390" fill="white" />
+                          <ellipse cx="410" cy="150" rx="118" ry="110" fill="url(#hero-connector-clearance-desktop)" />
+                        </mask>
+                        <mask id="hero-connector-mask-mobile" x="0" y="0" width="820" height="390" maskUnits="userSpaceOnUse">
+                          <rect width="820" height="390" fill="white" />
+                          <ellipse cx="410" cy="205" rx="140" ry="92" fill="url(#hero-connector-clearance-mobile)" />
+                        </mask>
                         <path id="hero-path-operations" d="M394 164c-36-12-34-70-64-88-14-8-30-8-48-8h-76" />
                         <path id="hero-path-documents" d="M392 205c-34-3-43-18-73-15-33 3-65 7-95 4h-18" />
                         <path id="hero-path-infrastructure" d="M378 214 C378 266 360 312 326 330 C298 340 264 334 238 334 H206" />
@@ -793,7 +813,7 @@ function App() {
                         <path id="hero-mobile-path-reporting" d="M520 354h-20c-38 0-42-82-76-108" />
                       </defs>
 
-                      <g className="hero-connections-desktop">
+                      <g className="hero-connections-desktop" mask="url(#hero-connector-mask-desktop)">
                         <g className="hero-connection-glow" filter="url(#hero-connector-soft-glow)">
                           <use href="#hero-path-operations" className="hero-connection-left" />
                           <use href="#hero-path-documents" className="hero-connection-left" />
@@ -833,7 +853,7 @@ function App() {
                           </g>    
                       </g>
 
-                      <g className="hero-connections-mobile">
+                      <g className="hero-connections-mobile" mask="url(#hero-connector-mask-mobile)">
                         <g className="hero-connection-glow" filter="url(#hero-connector-soft-glow)">
                           <use href="#hero-mobile-path-operations" className="hero-connection-left" />
                           <use href="#hero-mobile-path-documents" className="hero-connection-left" />
@@ -1316,8 +1336,8 @@ function App() {
                 className="brand-logo footer-logo"
                 src={scartLogo}
                 alt="Scart Solutions"
-                width="2048"
-                height="1152"
+                width="20165"
+                height="6918"
               />
             </a>
             <p>Software, infrastructure, and support designed for real operations.</p>
