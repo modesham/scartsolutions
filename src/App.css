@@ -8780,3 +8780,25 @@ html[data-theme='light'] .reason-item span {
     overflow-wrap: break-word;
   }
 }
+
+/* Preserve section geometry while separating product proof from selected work. */
+.selected-work-section {
+  box-shadow: 0 1px 0 rgb(var(--scart-cyan-light-rgb) / 0.12) inset;
+}
+
+html[data-theme='light'] .scart-files-section {
+  background:
+    radial-gradient(circle at 72% 18%, rgb(var(--scart-cyan-rgb) / 0.055), transparent 34%),
+    color-mix(in srgb, var(--scart-ice) 88%, var(--scart-cyan-light));
+}
+
+html[data-theme='light'] .selected-work-section {
+  background:
+    radial-gradient(circle at 72% 18%, rgb(var(--scart-cyan-rgb) / 0.035), transparent 34%),
+    linear-gradient(
+      180deg,
+      var(--scart-ice) 0%,
+      color-mix(in srgb, var(--scart-ice) 94%, var(--scart-cyan-light)) 100%
+    );
+  box-shadow: 0 1px 0 rgb(var(--scart-blue-rgb) / 0.14) inset;
+}

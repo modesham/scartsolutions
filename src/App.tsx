@@ -100,8 +100,8 @@ const navLinks = [
   { label: 'Home', href: '#home', id: 'home' },
   { label: 'Solutions', href: '#solutions', id: 'solutions' },
   { label: 'Industries', href: '#industries', id: 'industries' },
-  { label: 'Work', href: '#work', id: 'work' },
   { label: 'Products', href: '#products', id: 'products' },
+  { label: 'Work', href: '#work', id: 'work' },
   { label: 'About', href: '#about', id: 'about' },
 ]
 
@@ -252,8 +252,8 @@ const sectionIds = [
   'home',
   'solutions',
   'industries',
-  'work',
   'products',
+  'work',
   'about',
 ]
 
@@ -998,47 +998,6 @@ function App() {
           </div>
         </section>
 
-        <section className="section selected-work-section" id="work" aria-labelledby="work-title">
-          <div className="section-inner">
-            <div className="section-heading work-heading">
-              <div>
-                <p className="eyebrow">Selected work</p>
-                <h2 id="work-title">Solutions designed for real businesses</h2>
-              </div>
-              <p>
-                A selection of branding, digital, and business-focused projects
-                developed to help organisations present themselves clearly and
-                operate professionally.
-              </p>
-            </div>
-
-            <div className="work-grid">
-              {featuredProjects.map((project) => (
-                <article className="work-card" key={project.title}>
-                  <div className="work-visual">
-                    <img src={project.imageSrc} alt={project.imageAlt} />
-                  </div>
-
-                  <div className="work-card-body">
-                    <p className="work-category">{project.category}</p>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
-                    <button
-                      className="work-action"
-                      type="button"
-                      onClick={(event) => handleProjectOpen(event, project)}
-                      aria-label={`View ${project.title} project`}
-                    >
-                      View Project
-                      <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section className="section products-section" id="products" aria-labelledby="products-title">
           <div className="section-inner">
             <div className="section-heading products-heading">
@@ -1263,6 +1222,47 @@ function App() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="section selected-work-section" id="work" aria-labelledby="work-title">
+          <div className="section-inner">
+            <div className="section-heading work-heading">
+              <div>
+                <p className="eyebrow">Selected work</p>
+                <h2 id="work-title">Solutions designed for real businesses</h2>
+              </div>
+              <p>
+                A selection of branding, digital, and business-focused projects
+                developed to help organisations present themselves clearly and
+                operate professionally.
+              </p>
+            </div>
+
+            <div className="work-grid">
+              {featuredProjects.map((project) => (
+                <article className="work-card" key={project.title}>
+                  <div className="work-visual">
+                    <img src={project.imageSrc} alt={project.imageAlt} />
+                  </div>
+
+                  <div className="work-card-body">
+                    <p className="work-category">{project.category}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <button
+                      className="work-action"
+                      type="button"
+                      onClick={(event) => handleProjectOpen(event, project)}
+                      aria-label={`View ${project.title} project`}
+                    >
+                      View Project
+                      <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+                    </button>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
